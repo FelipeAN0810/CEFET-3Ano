@@ -1,0 +1,10 @@
+Turma: INFO-3
+Aluno: Felipe Augusto do Nascimento
+Aluno: João Victor dos Santos Peixoto
+Aluno: Thayllon Ryan Bragança de Almeida
+
+Como rodar: Compile o DesktopLauncher que está localizado no diretório: desktop\src\com\mygdx\game
+
+Como jogar: Mova o personagem pelo controle de setas do teclado.
+
+Funcionamento: Para ganhar ponto, precisa-se acertar a tartaruga por baixo da plataforma, e você perderá os mesmos se atingir uma bola de fogo

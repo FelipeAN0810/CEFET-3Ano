@@ -1,0 +1,64 @@
+{
+    // Use o IntelliSense para saber mais sobre os atributos possíveis.
+    // Focalizar para exibir as descrições dos atributos existentes.
+    // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch TrabPratico",
+            "request": "launch",
+            "mainClass": "TrabPratico",
+            "projectName": "trab_3787544c"
+        },
+        {
+            "type": "java",
+            "name": "Launch TrabPratico",
+            "request": "launch",
+            "mainClass": "TrabPratico",
+            "projectName": "trab_e4a16756"
+        },
+        {
+            "type": "java",
+            "name": "Launch TrabPratico",
+            "request": "launch",
+            "mainClass": "TrabPratico",
+            "projectName": "trab_4e7a4100"
+        },
+        {
+            "type": "java",
+            "name": "Launch TrabPratico",
+            "request": "launch",
+            "mainClass": "TrabPratico",
+            "projectName": "TrabalhoPratico1_93d2e279"
+        },
+        {
+            "type": "java",
+            "name": "Launch TrabPratico",
+            "request": "launch",
+            "mainClass": "TrabPratico",
+            "projectName": "TrabalhoPratico1_b31f0e6f"
+        },
+        {
+            "type": "java",
+            "name": "Launch testeArraySort",
+            "request": "launch",
+            "mainClass": "testeArraySort",
+            "projectName": "TrabalhoPratico1_b31f0e6f"
+        },
+        {
+            "name": "Launch",
+            "type": "mono",
+            "request": "launch",
+            "program": "${workspaceRoot}/program.exe",
+            "cwd": "${workspaceRoot}"
+        },
+        {
+            "name": "Attach",
+            "type": "mono",
+            "request": "attach",
+            "address": "localhost",
+            "port": 55555
+        }
+    ]
+}

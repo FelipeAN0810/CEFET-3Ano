@@ -1,0 +1,11 @@
+﻿Turma: Informática 3
+
+
+Nomes:
+João Victor dos Santos Peixoto
+Felipe Augusto do Nascimento
+Thayllon Ryan Bragança de Almeida
+
+
+Como Rodar:
+Você terá que rodar o arquivo java TrabPratico.java, depois da execução será gerado 27 arquivos referente a cada algoritmo e a cada número de entrada e tipo de entrada(aleatório, crescente e decrescente).
