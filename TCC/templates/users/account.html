@@ -1,0 +1,116 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="{% static '/css/Login.css' %}">
+    <link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
+    <link rel="stylesheet" href='https://unicons.iconscout.com/release/v2.1.9/css/unicons.css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon"href="{% static 'img/favicon.ico' %}">
+    <title>Login</title>
+</head>
+
+<body>
+    <div class="section">
+        <div class="container">
+            <div class="row full-height justify-content-center">
+                <div class="col-12 text-center align-self-center py-5" style="display: flex; justify-content: center;">
+                    <div class="section pb-5 pt-4 p5-sm-2 text-center back">
+                        <img src="{% static '/img/Logo.png' %}" class="logo" alt="Logo">
+                        <h6 class="mb-0 pb-3" style="color: #2a2b38">
+                            <Span>Conectar</Span>
+                            <Span>Inscrever</Span>
+                        </h6>
+                        <input type="checkbox" class="checkbox" id="reg-log" name="reg-log">
+                        <label for="reg-log"></label>
+                        <div class="card-3d-wrap mx-auto">
+                            <div class="card-3d-wrapper">
+
+                                <div class="card-front">
+
+                                    <form method="POST" action="" >
+                                        {% csrf_token %}
+                                        <div class="center-wrap">
+                                            <div class="section text-center">
+                                                <h4 class="mb-2 pb-3" style="color: #c4c3ca">Conectar</h4>
+                                                <div class="form-group">
+                                                    {{ form.email }}
+                                                    <i class="input-icon uil uil-at"></i>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    {{ form.password }}
+                                                    <i class="input-icon uil uil-lock-alt"></i>
+                                                </div>
+                                                
+                                                <input type="submit" class="btn mt-4" style="padding-top: 8px;" value="Enviar">
+                                                <p class="mb-0 mt-4 text-center"><a href="#0" class="link">Esqueceu sua senha?</a></p>
+                                                <br>
+                                                {% if form.errors %}
+                                                    {% for error in form.non_field_errors %}
+                                                        <div class="alert alert-danger">
+                                                            <strong>{{ error }}</strong>
+                                                        </div>
+                                                    {% endfor %}
+                                                {%endif%}
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="card-back">
+                                    <form action="register/" method="POST" enctype="multipart/form-data">
+                                        <div class="center-wrap">
+                                            {% csrf_token %}
+                                            <div class="section text-center">
+                                                <h4 class="mb-4 pb-3" style="color: #c4c3ca">Inscrever</h4>
+                                                <div class="form-group">
+                                                    {{ form2.first_name }}
+                                                    <i class="input-icon uil uil-user"></i>
+                                                </div><div class="form-group">
+                                                    {{ form2.last_name }}
+                                                    <i class="input-icon uil uil-user"></i>
+                                                </div>
+                                                <hr>
+                                                <div class="form-group mt-2">
+                                                    {{ form2.email }}
+                                                    <i class="input-icon uil uil-at"></i>
+                                                </div>
+                                                <hr>
+                                                <div class="form-group mt-2">
+                                                    {{ form2.password }}
+                                                    <i class="input-icon uil uil-lock-alt"></i>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    {{ form2.confirmPassword }}}
+                                                    <i class="input-icon uil uil-lock-alt"></i>
+                                                </div>
+                                                <input type="submit" class="btn mt-4" style="padding-top: 8px;" value="Enviar">
+
+                                                <br>
+                                                <br>
+                                                {% if form2.errors %}
+                                                    {% for erro in form2.non_field_errors %}
+                                                        <div class="alert alert-danger">
+                                                            <strong>{{ erro }}</strong>
+                                                        </div>
+                                                    {% endfor %}
+                                                {%endif%}
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load crispy_forms_tags %}
+{% block title %}Calendar{% endblock %}
+
+{% block pagestatic %}
+  <script src='{% static "js/calendar.js" %}'></script>
+{%  endblock %}
+
+{% block content %}
+    <div id='calendar'></div>
+
+
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Novo Evento</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form method="POST" action="/addEvent/">
+  
+              <div class="modal-body " >
+                {% csrf_token %}    
+                {% crispy form %}
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <input type="submit" class="btn btn-success" id="createEvent" value="Criar Evento">
+                </div>
+              </div>
+  
+
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    
+    <script>
+
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+  
+    const chatSocket = new WebSocket('ws://'+ window.location.host+'/ws/sendEvent/'+{{idC}});
+  
+    chatSocket.onopen = function(message) {
+      console.log("open", message);
+    }
+  
+    chatSocket.onerror = function(message) {
+        console.log("error", message);
+    }
+  
+    chatSocket.onclose = function(message) {
+        console.log("close", message);
+    }
+  
+  
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+  
+        if (data) {
+          calendar.addEvent(data);
+          calendar.render();
+          
+        } else {
+            alert('The message was empty!')
+        }
+  
+    };
+  
+    document.querySelector('#createEvent').onclick = function(e) {
+        
+        e.preventDefault();
+  
+        var title = $("input[name='name']").val();
+        var description = $("textarea[name='description']").val();
+        var date_start = $("input[name='date_start']").val();
+        var date_end = $("input[name='date_end']").val();
+        var access = $("select[name='access'] option:selected").val();
+  
+  
+        chatSocket.send(JSON.stringify({
+            'title': title,
+            'description': description,
+            'date_start': date_start,
+            'date_end': date_end,
+            'access': access,
+            'idcalendar': {{idC}}
+        }));
+  
+  
+        return false
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+  document.addEventListener('DOMContentLoaded', function() {
+
+    event = {{events|safe}}
+
+    var cont = 0;
+    
+    var calendarios = new Array();
+    calendarios.push(calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      timeZone: 'UTC',
+      dayMaxEventRows: 2,
+      height: "100%",
+      id_calendario: 1,
+      customButtons: {
+        viw: {
+          text: 'lista/Dias',
+          click: function() {
+            if(cont % 2 == 0){
+              calendar.changeView('listWeek');
+              
+            }else{
+              calendar.changeView('dayGridMonth');
+              calendar.render();
+            }
+            
+            cont++
+          }
+        },
+
+        {% if main %}
+          addEvent:{
+            text:'Evento+',
+            click: function(){
+
+              $('#exampleModal').modal('show');
+              
+            }
+          },
+
+          removeEvent:{
+            text: 'Evento-',
+            click: function() {
+              var id = prompt('digie o id do evento que será excluido.');
+              var evento = calendar.getEventById(id)
+              evento.remove();
+            }
+          }
+        
+        {%endif%}
+
+        
+      },
+      
+      {% if main %}
+        headerToolbar: {
+          left: 'today viw addEvent',
+          center: 'title',
+          right: 'removeEvent prev,next'
+        },
+      {%else%}
+        headerToolbar: {
+          left: 'today viw',
+          center: 'title',
+          right: 'prev,next'
+        },
+      {%endif%}
+
+      events:event,
+      
+      eventClick: function(info) {
+        alert('Titulo: ' + info.event.title);
+        alert('Começo: ' + info.event.start);
+        alert('ID: ' + info.event.id);
+        alert('Descrição: ' + info.event.extendedProps.description);
+        alert('Departamento: ' + info.event.extendedProps.department);
+        alert('id_calendario_pertecente: ' + info.event.id_calendario_pertecente);
+        
+       
+      },
+              
+    }));
+    calendarios.push(calendar1 = new FullCalendar.Calendar(calendarEl,{
+      initialView: 'dayGridMonth',
+      timeZone: 'UTC',
+      dayMaxEventRows: 2,
+      height: "100%",
+      id_calendario: 2
+
+      
+    }))
+
+    
+
+    
+    var contador = 1;
+    calendarios[0].render();
+    var event = calendarios[0].getEventById('a') 
+    
+    document.getElementById('addEvent').addEventListener('click',function(){
+      var id = prompt("digite o id do calendario que deseja adicionar os eventos ao seu");
+
+      for(var i = 0; i < calendarios.length; i++){
+        if(calendarios[i].getOption('id_calendario') == id){
+          var id_atual = prompt("digite o id do seu calendario");
+          for(var j = 0; j < calendarios.length; j++){
+            if(calendarios[j].getOption('id_calendario') == id_atual){
+              calendarios[i].addEvent(calendarios[j].getEventById('a'));
+            }
+          }
+        }
+      }
+    });
+  });
+  
+    </script>
+{% endblock %}
